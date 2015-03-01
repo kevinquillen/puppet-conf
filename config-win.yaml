@@ -10,7 +10,7 @@ vagrantfile-local:
         # Normally, you can switch sync_modules to false, 
         # after the first successful provision
         # if you don't want to update Puppet modules.
-        sync_modules: false
+        sync_modules: true
         # Switch puphpet_sync to true if you want to use standard 
         # Vagrant synced folder mechanisms, including:
         # default (VirtualBox), SMB, rsync, NFS. 
@@ -289,11 +289,6 @@ mysql:
         'mysqld':
             'bind-address': '0.0.0.0'
             'max_allowed_packet': '128M'
-            'innodb_buffer_pool_size': '128M'
-            'innodb_file_per_table': 'TRUE'
-            'innodb_log_file_size': '128M'
-            'mysql_character_set_server': 'utf8'
-            'mysql_collation_server': 'utf8_general_ci'
             'skip_name_resolve': 'TRUE'
     databases:
         drupal7:
