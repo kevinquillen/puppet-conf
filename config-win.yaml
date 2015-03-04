@@ -42,7 +42,7 @@ vagrantfile-local:
                     - '--parser future'
         synced_folder:
             wRT5TsSy6sE4:
-                source: C:\Users\Kevin\Projects\Sites
+                source: PATH TO Projects\Sites
                 target: /var/www/sites
                 sync_type: nfs
                 rsync:
