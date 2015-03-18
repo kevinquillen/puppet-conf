@@ -133,7 +133,7 @@ apache:
             servername: drupal7.com
             serveraliases:
                 - local.drupal7.com
-            docroot: /var/www/sites/drupal7.com
+            docroot: /var/www/sites/drupal7.com/docroot
             port: '80'
             setenv:
                 - 'APP_ENV dev'
