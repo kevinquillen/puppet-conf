@@ -200,6 +200,7 @@ php:
             - apcu
             - ssh2-0.12
             - memcached
+            - yaml
             # Uncomment when the issue during installation is gone.
             # - pecl_http
     ini:
