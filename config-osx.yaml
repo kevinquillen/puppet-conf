@@ -133,7 +133,7 @@ apache:
             servername: sandbox1.com
             serveraliases:
                 - local.sandbox1.com
-            docroot: /var/www/sites/sandbox1.com
+            docroot: /var/www/sites/sandbox1.com/docroot
             port: '80'
             setenv:
                 - 'APP_ENV dev'
