@@ -197,9 +197,10 @@ php:
             - Console_Color2-0.1.2
         pecl:
             - uploadprogress
-            # - apcu
+            - apcu
             - ssh2-0.12
-            # - memcached
+            - memcached
+            - yaml
             # Uncomment when the issue during installation is gone.
             # - pecl_http
     ini:
@@ -210,15 +211,16 @@ php:
         upload_max_filesize: '128M'
         post_max_size: '128M'
         max_execution_time: '300'
-        opcache.enabled: 0
+        realpath_cache_size: '128K'
+        realpath_cache_ttl: '3600'
         apc.stat: 1
-        # opcache.memory_consumption: '128'
-        # opcache.interned_strings_buffer: '8'
-        # opcache.max_accelerated_files: '10000'
-        # opcache.revalidate_freq: '60'
-        # opcache.fast_shutdown: '1'
-        # opcache.enable_cli: '1'
-        # opcache.save_comments: '1'
+        opcache.memory_consumption: '128'
+        opcache.interned_strings_buffer: '8'
+        opcache.max_accelerated_files: '10000'
+        opcache.revalidate_freq: '0'
+        opcache.fast_shutdown: '1'
+        opcache.enable_cli: '1'
+        opcache.save_comments: '1'
         # For older version of PHP comment the above opcache section
         # and uncomment the below apc section.
         # apc.shm_size: '128M'
@@ -290,6 +292,9 @@ mysql:
             'bind-address': '127.0.0.1'
             'max_allowed_packet': '128M'
             'skip_name_resolve': 'TRUE'
+            'max_allowed_packet': '128M'
+            'wait_timeout': '600'
+            'innodb_lock_wait_timeout': '40'
     databases:
         sandbox1:
             grant:
