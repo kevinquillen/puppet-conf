@@ -10,7 +10,7 @@ vagrantfile-local:
         # Normally, you can switch sync_modules to false,
         # after the first successful provision
         # if you don't want to update Puppet modules.
-        sync_modules: false
+        sync_modules: true
         # Switch puphpet_sync to true if you want to use standard
         # Vagrant synced folder mechanisms, including:
         # default (VirtualBox), SMB, rsync, NFS.
