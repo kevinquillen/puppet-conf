@@ -7,16 +7,16 @@ vagrantfile-local:
         memory: '2048'
         cpus: '1'
         chosen_provider: virtualbox
-        # Normally, you can switch sync_modules to false, 
+        # Normally, you can switch sync_modules to false,
         # after the first successful provision
         # if you don't want to update Puppet modules.
-        sync_modules: true
-        # Switch puphpet_sync to true if you want to use standard 
+        sync_modules: false
+        # Switch puphpet_sync to true if you want to use standard
         # Vagrant synced folder mechanisms, including:
-        # default (VirtualBox), SMB, rsync, NFS. 
+        # default (VirtualBox), SMB, rsync, NFS.
         puphpet_sync: true
         network:
-            private_network: 192.168.9.10
+            private_network: 192.168.9.15
             forwarded_port:
                 5tryP4ZFTBV9:
                     host: '8888'
@@ -42,7 +42,7 @@ vagrantfile-local:
                     - '--parser future'
         synced_folder:
             wRT5TsSy6sE4:
-                source: PATH TO Projects\Sites
+                source: LOCAL PATH TO PROJECTS
                 target: /var/www/sites
                 sync_type: nfs
                 rsync:
@@ -59,11 +59,11 @@ vagrantfile-local:
     ssh:
         host: null
         port: null
-        private_key_path: null
+        private_key_path: ~/.ssh/id_rsa
         username: vagrant
         guest_port: null
         keep_alive: true
-        forward_agent: false
+        forward_agent: true
         forward_x11: false
         shell: 'bash -l'
     vagrant:
@@ -106,17 +106,18 @@ cron:
             minute: ''
             hour: '*/10'
             weekday: ''
-            month: ''    
+            month: ''
 firewall:
     install: '0'
     rules:
       xdebug:
-        port: 9000
+        port:
+          - '9000'
         proto: tcp
         action: accept
-        priority: 9000
+        priority: '9000'
 apache:
-    install: 1
+    install: '1'
     settings:
         user: www-data
         group: www-data
@@ -129,11 +130,11 @@ apache:
         - headers
         - expires
     vhosts:
-        drupal7:
-            servername: drupal7.com
+        sandbox1:
+            servername: sandbox1.com
             serveraliases:
-                - local.drupal7.com
-            docroot: /var/www/sites/drupal7.com/docroot
+                - local.sandbox1.com
+            docroot: /var/www/sites/sandbox1.com/docroot
             port: '80'
             setenv:
                 - 'APP_ENV dev'
@@ -156,7 +157,7 @@ nginx:
         default_vhost: 1
         proxy_buffer_size: 128k
         proxy_buffers: '4 256k'
-    upstreams: {  }        
+    upstreams: {  }
     vhosts:
         VTChGNgY0tNd:
             proxy: ''
@@ -174,7 +175,7 @@ nginx:
                 - 'APP_ENV dev'
             engine: php
             client_max_body_size: 5m
-            ssl: '1'           
+            ssl: '1'
             ssl_cert: ''
             ssl_key: ''
             rewrite_to_https: '1'
@@ -195,7 +196,7 @@ php:
             - PHP_CodeSniffer
             - Console_Table
             - Console_Color2-0.1.2
-        pecl:            
+        pecl:
             - uploadprogress
             - apcu
             - ssh2-0.12
@@ -207,7 +208,7 @@ php:
         display_errors: On
         error_reporting: '-1'
         session.save_path: '/var/lib/php/session'
-        memory_limit: '512M'
+        memory_limit: '256M'
         upload_max_filesize: '128M'
         post_max_size: '128M'
         max_execution_time: '300'
@@ -262,7 +263,7 @@ wpcli:
     version: v0.17.1
 drush:
     install: '1'
-    version: 7.0.0-alpha7
+    version: 7.0.0-rc1
 ruby:
     install: '1'
     versions:
@@ -277,6 +278,8 @@ nodejs:
     npm_packages:
         - bower
         - grunt-cli
+        - gulp
+        - gulp-cli
 python:
     install: '1'
     packages: {  }
@@ -284,41 +287,60 @@ python:
         VaW8Bw9fauSd:
             version: ''
 mysql:
-    install: 1
+    install: '1'
+    settings:
+        version: '5.6'
+        root_password: 'druphpet'
+        override_options:
+            'mysqld':
+                'bind-address': '0.0.0.0'
+                'max_allowed_packet': '128M'
+                'wait_timeout': '600'
+                'query_cache_type': '0'
+                'innodb_flush_log_at_trx_commit': '2'
+                'innodb_lock_wait_timeout': '40'
     root_password: 'druphpet'
     adminer: 0
-    override_options:
-        'mysqld':
-            'bind-address': '0.0.0.0'
-            'max_allowed_packet': '128M'
-            'skip_name_resolve': 'TRUE'
-            'wait_timeout': '600'
-            'innodb_lock_wait_timeout': '40'
-            'query_cache_type': '0'
-            'innodb_flush_log_at_trx_commit': '2'
+    users:
+        Jbm67TYdOcYk:
+            name: druphpet
+            password: 'druphpet'
     databases:
-        drupal7:
-            grant:
+        7fbvia6kvJyy:
+            name: druphpet
+            sql: ''
+    grants:
+        jIuf8vNQ40xJ:
+            user: druphpet
+            table: '*.*'
+            privileges:
                 - ALL
-            name: drupal7
-            host: '%'
-            user: drupal7
-            password: 'drupal7'
-            sql_file: ''
 postgresql:
     install: '0'
     settings:
-        root_password: '123'
-        user_group: postgres
-        encoding: UTF8
-        version: '9.3'
+        global:
+            encoding: UTF8
+            version: '9.4'
+        server:
+            postgres_password: '123'
+            listen_addresses: '*'
+    users:
+        iwpe335mndsfE:
+            username: druphpet
+            password: druphpet
     databases:
-        ovKmEZcMgJTX:
-            grant: ALL
-            name: druphpet
-            user: druphpet
-            password: ''
-            sql_file: ''
+        fjdkMETnllgk:
+            dbname: druphpet
+            owner: druphpet
+        datacenter:
+            dbname: datacenter
+            owner: druphpet
+    grants:
+        jIuf8vNQ40xJ:
+            role: druphpet
+            db: druphpet
+            privilege:
+                - ALL
     adminer: '0'
 mariadb:
     install: '0'
@@ -347,13 +369,18 @@ sqlite:
 mongodb:
     install: '0'
     settings:
-        auth: 1
+        auth: '0'
         port: '27017'
+        bind_ip: 0.0.0.0
     databases:
         zEH4gB9sPFGo:
             name: druphpet
             user: druphpet
             password: druphpet
+        datacenter:
+            name: datacenter
+            user: datacenter
+            password: datacenter
 redis:
     install: '0'
     settings:
